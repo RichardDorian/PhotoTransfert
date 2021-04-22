@@ -3,7 +3,8 @@
         "_info": "If the listener is set to 'true', the oneDrive authentication process will be semi-manual, if it set to 'false', the oneDrive authentication process will be fully manual",
         "enableListener": true,
         "listenerPort": 37793,
-        "deletingFilesOnOneDriveAfterMoving": false
+        "deletingFilesOnOneDriveAfterMoving": false,
+        "maxUploadingTime": 45
     },
     "oneDriveAuth": {
         "clientId": "",
