@@ -5,7 +5,7 @@ NodeJS app made under 2 days by a cool guy (me)
 
 What PhotoTransfert is ?
 -------------------
-Photo Transfer is a Node JS application whose goal is to transfer your photos from OneDrive to Google Photos
+Photo Transfert is a Node JS application whose goal is to transfer your photos from OneDrive to Google Photos
 
 In what situation could I use this program ?
 -------------------
