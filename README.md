@@ -1,3 +1,5 @@
+> :warning: **The readme file is not fully written!**
+
 # PhotoTransfert
 NodeJS app made under 2 days by a cool guy (me) 
 
