@@ -4,12 +4,14 @@
         "enableListener": true,
         "listenerPort": 37793,
         "deletingFilesOnOneDriveAfterMoving": false,
-        "maxUploadingTime": 45
+        "maxUploadingTime": 120
     },
     "oneDriveAuth": {
         "clientId": "",
         "redirectUri": "",
         "clientSecret": "",
+        "_info": "Keep 'refreshToken' blank ! This field will be filled when running 'npm run onedrive-authenticate'",
+        "refreshToken": "",
         "autoWriteConfig": true
     },
     "oneDrive": {
@@ -18,9 +20,9 @@
         "folderId": ""
     },
     "googlePhotos": {
-        "_info": "Keep 'authToken' blank ! This field will be filled when running 'npm run google-authenticate' The accessToken is valid only 1 hour !",
+        "_info": "Keep 'authToken' blank ! This field will be filled when running 'npm run google-authenticate' The authToken is valid only 1 hour !",
         "authToken": "",
-        "albumName": "PhotoTransfert output",
+        "albumName": "",
         "_info1": "Keep 'albumId' blank ! This field will be fillder when running 'npm run google-authenticate' for the first time",
         "albumId": ""
     },
@@ -28,6 +30,8 @@
         "clientId": "",
         "clientSecret": "",
         "redirectUri": "",
+        "_info": "Keep 'refreshToken' blank ! This field will be filled when running 'npm run google-authenticate'",
+        "refreshToken": "",
         "autoWriteConfig": true
     },
     "advanced": {

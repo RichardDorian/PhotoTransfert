@@ -59,10 +59,14 @@ async function downloadOneDriveFiles(fileId, fileName) {
 /** Uploading data to Google Photos */
 
 async function uploadToGooglePhotos(fileName, fileId) {
-    let uploadToken = await photos.transport.upload(fileName, __dirname + "/downloads/" + fileName, config.application.maxUploadingTime * 1000);
-    let upload = await photos.mediaItems.albumBatchCreate(googlePhotos.albumId, fileName, "Automatic upload", uploadToken)
-    console.info("File " + fileName +" uploaded");
-    deleteFile(fileName, fileId);
+    try {
+        let uploadToken = await photos.transport.upload(fileName, __dirname + "/downloads/" + fileName, config.application.maxUploadingTime * 1000);
+        let upload = await photos.mediaItems.albumBatchCreate(googlePhotos.albumId, fileName, "Automatic upload", uploadToken)
+        console.info("File " + fileName +" uploaded");
+        deleteFile(fileName, fileId);
+    } catch (error) {
+        console.info("File " + fileName + " was not uploaded (Time out, try increasing the maxUploadingTime value in the config)")
+    }
 }
 
 /** Deleting file from hard drive */

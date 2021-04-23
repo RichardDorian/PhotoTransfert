@@ -1,47 +1,79 @@
 const fetch = require('node-fetch');
+const fs = require('fs');
 
 const config = require('./../config.json');
 
 const oneDriveAuth = config.oneDriveAuth;
 
-console.info(`Please open this link to continue : \nhttps://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${oneDriveAuth.clientId}&scope=files.readwrite.all&response_type=code&redirect_uri=${oneDriveAuth.redirectUri}`);
-if(config.application.enableListener) {
-    let listener = require('./listener.js');
-    listener.app.get('/oneDriveAuthCode', function (request, response) {
-        response.sendStatus(200);
-        getAccessToken(request.query.code);
-    });
+if(oneDriveAuth.refreshToken == "" || oneDriveAuth.refreshToken == null) {
+    let url = `https://login.live.com/oauth20_authorize.srf?client_id=${oneDriveAuth.clientId}&scope=files.readwrite.all offline_access&response_type=code&redirect_uri=${oneDriveAuth.redirectUri}`;
+    console.info("Please open this link to continue : \n" + url);
+    if(oneDriveAuth.autoWriteConfig) {
+        const listener = require('./listener.js');
+        listener.app.get('/oneDriveAuthCode', function (request, response) {
+            getAccessToken(request.query.code);
+            response.sendStatus(200);
+        });
+    } else {
+        const readline = require('readline');
+        const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+        rl.question("After accepting come back here and paste the value of 'code' : ", function(authCode) {
+            getAccessToken(authCode);
+        });
+    }
 } else {
-    const readline = require("readline");
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-    rl.question("After accepting come back here and paste the value of 'code' : ", function(authCode) {
-        getAccessToken(authCode);
+    refreshToken(oneDriveAuth.refreshToken);
+}
+
+function writeRefreshToken(refreshToken) {
+    const newConfig = require('./../config.json');
+    newConfig.oneDriveAuth.refreshToken = refreshToken;
+    fs.writeFile(__dirname + "/../config.json", JSON.stringify(newConfig, null, 4), (err) => {
+        if (err) throw err;
+        console.info("Refresh token updated");
+    });
+}
+
+function writeAccessToken(accessToken) {
+    const newConfig = require('./../config.json');
+    newConfig.oneDrive.accessToken = accessToken;
+    fs.writeFile(__dirname + "/../config.json", JSON.stringify(newConfig, null, 4), (err) => {
+        if (err) throw err;
+        console.info("Access token updated");
+        process.exit(0);
     });
 }
 
 function getAccessToken(authCode) {
-    console.log("\nTrying to get an access token with " + authCode + " authentication code");
-    let accessToken;
-    fetch(`https://login.microsoftonline.com/common/oauth2/v2.0/token`, {
-        
+    let response;
+    fetch('https://login.live.com/oauth20_token.srf', {
         method: 'post',
         body: `client_id=${oneDriveAuth.clientId}&redirect_uri=${oneDriveAuth.redirectUri}&client_secret=${oneDriveAuth.clientSecret}&code=${authCode}&grant_type=authorization_code`,
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    }).then(res => res.json()).then(json => {
-        accessToken = json.access_token;
-        if(config.oneDriveAuth.autoWriteConfig) {
-            const fs = require('fs');
-            console.info("Writing access_token to the config file...");
-            config.oneDrive.accessToken = accessToken;
-            fs.writeFile(__dirname + "/../config.json", JSON.stringify(config, null, 4), (err) => {
-                if (err) throw err;
-                console.log("access_token written !");
-                process.exit(0);
-            })
-        } else {
-            console.info("\nThis is your access_token, write this in the config.json file : \n\n" + accessToken);
-            process.exit(0);
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
         }
-        
+    })
+    .then(res => res.json())
+    .then(json => {
+        response = json;
+        writeRefreshToken(response.refresh_token);
+        writeAccessToken(response.access_token);
+    });
+}
+
+function refreshToken(refreshToken) {
+    let response;
+    fetch('https://login.live.com/oauth20_token.srf', {
+        method: 'post',
+        body : `client_id=${oneDriveAuth.clientId}&redirect_uri=${oneDriveAuth.redirectUri}&client_secret=${oneDriveAuth.clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(res => res.json())
+    .then(json => {
+        response = json;
+        writeRefreshToken(response.refresh_token);
+        writeAccessToken(response.access_token);
     });
 }
