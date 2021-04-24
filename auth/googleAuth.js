@@ -42,7 +42,9 @@ function writeAccessToken(accessToken) {
 async function getAccessToken(authCode) {
     const {tokens} = await oauth2Client.getToken(authCode);
     writeRefreshToken(tokens.refresh_token);
-    writeAccessToken(tokens.access_token);
+    setTimeout(() => {
+        writeAccessToken(tokens.access_token)
+    }, 1000);
 }
 
 function refreshToken(refreshToken) {
@@ -57,7 +59,9 @@ function refreshToken(refreshToken) {
     .then(res => res.json())
     .then(json => {
         response = json;
-        writeAccessToken(response.access_token);
+        setTimeout(() => {
+            
+        }, 1000);
     });
 }
 

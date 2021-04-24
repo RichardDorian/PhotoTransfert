@@ -49,7 +49,9 @@ function getAccessToken(authCode) {
     .then(json => {
         response = json;
         writeRefreshToken(response.refresh_token);
-        writeAccessToken(response.access_token);
+        setTimeout(() => {
+            writeAccessToken(response.access_token);
+        }, 1000);
     });
 }
 
@@ -66,6 +68,8 @@ function refreshToken(refreshToken) {
     .then(json => {
         response = json;
         writeRefreshToken(response.refresh_token);
-        writeAccessToken(response.access_token);
+        setTimeout(() => {
+            writeAccessToken(response.access_token);
+        }, 1000);
     });
 }
