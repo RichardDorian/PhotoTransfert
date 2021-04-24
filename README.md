@@ -21,7 +21,11 @@ Setup process
 ------------------
 
 First of all, if you prefer a video [here is one](#video-tutorial)
-
+* Install dependances
+  Open command prompt for Windows or a terminal for Linux and run this command to install all the packages
+  ```
+  npm install
+  ```
 * Configure the app<br>
       Open the config with a text editor like Notepad++ or Sublime Text<br>
       Set the port for the listener by editing the value of `listenerPort` under `application` part<br>
@@ -38,6 +42,7 @@ First of all, if you prefer a video [here is one](#video-tutorial)
       After we need to add a redirct uri to our Azure App, to do this navigate to the **Authentication** tab and click on the **Add a platform** button, after click on **Web**. In the first text field we are going to enter the redirect uri, wich is : 
       ```
       https://<LOCAL_IP_ADDDRESS> by the local Ip address of your machine
+      ```
       -> Replace \<PORT> by the port you set for the listener in the config (Default is 37793)
       And finally click on the **Configure** button
       Now you have to set `redirectUri` (under `OneDriveAuth` part) value in the config file<br>
