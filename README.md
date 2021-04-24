@@ -41,7 +41,7 @@ First of all, if you prefer a video [here is one](#video-tutorial)
       Go on the **Overview** tab and copy the `Appliclation (Client) ID` and paste the **ClientID** in the config under `ClientId` in the `OneDriveAuth` part of the file.<br>
       After we need to add a redirct uri to our Azure App, to do this navigate to the **Authentication** tab and click on the **Add a platform** button, after click on **Web**. In the first text field we are going to enter the redirect uri, wich is : 
       ```
-      https://<LOCAL_IP_ADDDRESS> by the local Ip address of your machine
+      https://<LOCAL_IP_ADDDRESS>:<PORT>/oneDriveAuthCode
       ```
       -> Replace \<PORT> by the port you set for the listener in the config (Default is 37793)
       And finally click on the **Configure** button
@@ -69,16 +69,16 @@ First of all, if you prefer a video [here is one](#video-tutorial)
       xxxxxxxxxxxxxxx!xxx
       ```
 * Google connection (Authorization)<br><br>
-  * Set the album name
+  * Set the album name<br>
     In the config file, you have to set the Album name, this will be the album in which all the photos will be uploaded
     To change this just set the value of `albumName` in the config under `googlePhotos` part<br><br>
   * Creating the app on Google Cloud Console<br>
-    Open the [Google Cloud console new project page](https://console.cloud.google.com/projectcreate) website<br>
+    Open the [Google Cloud console](https://console.cloud.google.com/projectcreate) new project page<br>
     When prompted, sign in with your account credentials<br>
     Enter your project's name and click **Create**<br><br>
   * Get and set all the informations from Google Cloud Console page to fill the config file<br>
-    Click on the **Menu** button (Hamburger button) on click on **Dashboard** under **API & Services** tab. Click on **+ Create Credentials** button and select **Oauth clientId**
-    In **Application type** select **Web application**, set a name if you want or leave by default. Click on **+ Add URI** button in **Authorized redirect URIs** part, In the text field we are going to enter the redirect uri, wich is :
+    Click on the **Menu** button (Hamburger button) on click on **Dashboard** under **API & Services** tab. Click on **+ Create Credentials** button and select **OAuth clientId**
+    In **Application type** select **Web application**, set a name if you want or leave by default. Click on **+ Add URI** button in **Authorized redirect URIs** part, in the text field we are going to enter the redirect uri, wich is :
     ```
     https://thiswebsitedoesnotrealyexist.com:<PORT>/googleAuthCode
     ```
@@ -86,7 +86,7 @@ First of all, if you prefer a video [here is one](#video-tutorial)
     Set the `RedirectURI` in the config file in `redirectUri` under `googleApi` part<br>
     :warning: **As Google only accept domains names you have to change your Windows HOST file to make `https://thiswebsitedoesnotrealyexist.com` point at the local ip address of your machine**<br>
     Now click on **Create** and after a card will show you your `Client ID` and your `Client Secret`
-    Copy those value and paste the `Client ID` in `clientId` under `googleApi` part and paste `Client Secret` in `clientSecret` under `googleApi` part<br>
+    Copy those values and paste the `Client ID` in `clientId` under `googleApi` part and paste `Client Secret` in `clientSecret` under `googleApi` part<br>
     Naviguate to the **Library** tab and in the search bar type `Photos` and the first result should be `Photos Library API`, click on it and after click on **Enable**<br><br>
   * Create the OAuth consent screen<br>
     Naviguate to the **OAuth consent screen** tab<br>
@@ -98,7 +98,7 @@ First of all, if you prefer a video [here is one](#video-tutorial)
     Scroll down, and click again on **Save and continue**<br>
     Now, click on **+ Add users** and write your Google account email address and click on **Add** and finaly click on **Save and continue** and click on **Back to dashboard**<br><br>
   * Run the script to set up the authentication<br>
-    To run the script you just have to open a command prompt for Windows or a terminal for Linux. After this run this command to setup OneDrive :
+    To run the script you just have to open a command prompt for Windows or a terminal for Linux. After this run this command to setup GooglePhotos :
     ```
     npm run google-authenticate
     ```
