@@ -11,19 +11,11 @@ if(config.googleApi.refreshToken == "" || config.googleApi.refreshToken == null)
     const url = oauth2Client.generateAuthUrl({access_type: 'offline', scope: scopes});
     console.info(`Please open this link to continue : \n${url}`);
 
-    if(config.application.enableListener) {
-        let listener = require('./listener.js');
+    const listener = require('./listener.js');
         listener.app.get('/googleAuthCode', function (request, response) {
             response.sendStatus(200);
             getAccessToken(request.query.code);
         });
-    } else {
-        const readline = require('readline');
-        const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-        rl.question("After accepting come back here and paste the value of 'code' : ", function(authCode) {
-            getAccessToken(authCode);
-        });
-    }
 } else {
     refreshToken(config.googleApi.refreshToken);
 }

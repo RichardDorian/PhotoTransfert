@@ -1,7 +1,6 @@
 {
     "application": {
         "_info": "If the listener is set to 'true', the oneDrive authentication process will be semi-manual, if it set to 'false', the oneDrive authentication process will be fully manual",
-        "enableListener": true,
         "listenerPort": 37793,
         "deletingFilesOnOneDriveAfterMoving": false,
         "maxUploadingTime": 120
@@ -11,8 +10,7 @@
         "redirectUri": "",
         "clientSecret": "",
         "_info": "Keep 'refreshToken' blank ! This field will be filled when running 'npm run onedrive-authenticate'",
-        "refreshToken": "",
-        "autoWriteConfig": true
+        "refreshToken": ""
     },
     "oneDrive": {
         "_info": "Keep 'accesssToken' blank ! This field will be filled when running 'npm run onedrive-authenticate' The accessToken is valid only 1 hour !",
@@ -31,8 +29,7 @@
         "clientSecret": "",
         "redirectUri": "",
         "_info": "Keep 'refreshToken' blank ! This field will be filled when running 'npm run google-authenticate'",
-        "refreshToken": "",
-        "autoWriteConfig": true
+        "refreshToken": ""
     },
     "advanced": {
         "_info": "Don't touch unless you know what you're doing !",

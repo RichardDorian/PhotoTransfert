@@ -8,19 +8,11 @@ const oneDriveAuth = config.oneDriveAuth;
 if(oneDriveAuth.refreshToken == "" || oneDriveAuth.refreshToken == null) {
     let url = `https://login.live.com/oauth20_authorize.srf?client_id=${oneDriveAuth.clientId}&scope=files.readwrite.all offline_access&response_type=code&redirect_uri=${oneDriveAuth.redirectUri}`;
     console.info("Please open this link to continue : \n" + url);
-    if(oneDriveAuth.autoWriteConfig) {
-        const listener = require('./listener.js');
+    const listener = require('./listener.js');
         listener.app.get('/oneDriveAuthCode', function (request, response) {
             getAccessToken(request.query.code);
             response.sendStatus(200);
         });
-    } else {
-        const readline = require('readline');
-        const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-        rl.question("After accepting come back here and paste the value of 'code' : ", function(authCode) {
-            getAccessToken(authCode);
-        });
-    }
 } else {
     refreshToken(oneDriveAuth.refreshToken);
 }
