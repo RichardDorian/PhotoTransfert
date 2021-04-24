@@ -26,18 +26,18 @@ First of all, if you prefer a video [here is one](#video-tutorial)
   ```
   npm install
   ```
-* Configure the app<br>
+* Configure the app<br><br>
       Open the config with a text editor like Notepad++ or Sublime Text<br>
       Set the port for the listener by editing the value of `listenerPort` under `application` part<br>
       Change value of `deletingFilesOnOneDriveAfterMoving` if you want your photos deleted on OneDrive after uploading to Google Photos (:warning: I am not responsible if the wrong files are deleted)<br>
       You can change the upload tiemout (in seconds) by changing the value of `maxUploadingTime`<br><br>
 * OneDrive connection (Authorization)<br><br>
-  * Creating the app on Microsoft Azure<br>
+  * Creating the app on Microsoft Azure<br><br>
       To create a new App, you have to go on the [Azure App registrations page](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)<br>
       When prompted, sign in with your account credentials<br>
       Find **My applications** and click **Add an app**<br>
       Enter your app's name and click **Create application**<br><br>
-  * Get and set all the informations from the Azure App page to fill the config file<br>
+  * Get and set all the informations from the Azure App page to fill the config file<br><br>
       Go on the **Overview** tab and copy the `Appliclation (Client) ID` and paste the **ClientID** in the config under `ClientId` in the `OneDriveAuth` part of the file.<br>
       After we need to add a redirct uri to our Azure App, to do this navigate to the **Authentication** tab and click on the **Add a platform** button, after click on **Web**. In the first text field we are going to enter the redirect uri, wich is : 
       ```
@@ -52,7 +52,7 @@ First of all, if you prefer a video [here is one](#video-tutorial)
       ```json
       "signInAudience": "AzureADandPersonalMicrosoftAccount"
       ```
-  * Run the script to set up the authentication<br>
+  * Run the script to set up the authentication<br><br>
       To run the script you just have to open a command prompt for Windows or a terminal for Linux. After this run this command to setup OneDrive :
       ```
       npm run onedrive-authenticate
@@ -62,21 +62,21 @@ First of all, if you prefer a video [here is one](#video-tutorial)
       https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=YOUR_CLIENT_ID&scope=files.readwrite.all&response_type=code&redirect_uri=https://localhost:37793/oneDriveAuthCode
       ```
       Open the link, authorize the application and you are done with the script<br><br>
-  * Set the folder ID in the config<br>
+  * Set the folder ID in the config<br><br>
       Put the ID of the folder in which your photos are in the config under `folderId` in the `oneDrive` part<br>
       You can get the folder ID by going to OneDrive through a web browser, when you are in, get the **URL** and copy the value of `id` and replace `%21` by a `!` and you should get something like this :
       ```
       xxxxxxxxxxxxxxx!xxx
       ```
 * Google connection (Authorization)<br><br>
-  * Set the album name<br>
+  * Set the album name<br><br>
     In the config file, you have to set the Album name, this will be the album in which all the photos will be uploaded
     To change this just set the value of `albumName` in the config under `googlePhotos` part<br><br>
-  * Creating the app on Google Cloud Console<br>
+  * Creating the app on Google Cloud Console<br><br>
     Open the [Google Cloud console](https://console.cloud.google.com/projectcreate) new project page<br>
     When prompted, sign in with your account credentials<br>
     Enter your project's name and click **Create**<br><br>
-  * Get and set all the informations from Google Cloud Console page to fill the config file<br>
+  * Get and set all the informations from Google Cloud Console page to fill the config file<br><br>
     Click on the **Menu** button (Hamburger button) on click on **Dashboard** under **API & Services** tab. Click on **+ Create Credentials** button and select **OAuth clientId**
     In **Application type** select **Web application**, set a name if you want or leave by default. Click on **+ Add URI** button in **Authorized redirect URIs** part, in the text field we are going to enter the redirect uri, wich is :
     ```
@@ -88,7 +88,7 @@ First of all, if you prefer a video [here is one](#video-tutorial)
     Now click on **Create** and after a card will show you your `Client ID` and your `Client Secret`
     Copy those values and paste the `Client ID` in `clientId` under `googleApi` part and paste `Client Secret` in `clientSecret` under `googleApi` part<br>
     Naviguate to the **Library** tab and in the search bar type `Photos` and the first result should be `Photos Library API`, click on it and after click on **Enable**<br><br>
-  * Create the OAuth consent screen<br>
+  * Create the OAuth consent screen<br><br>
     Naviguate to the **OAuth consent screen** tab<br>
     Select **External** and click **Create**<br>
     In **App name** write anything you want, `PhotoTransfert` for example
@@ -97,7 +97,7 @@ First of all, if you prefer a video [here is one](#video-tutorial)
     Write your email address and click **Save and continue**<br>
     Scroll down, and click again on **Save and continue**<br>
     Now, click on **+ Add users** and write your Google account email address and click on **Add** and finaly click on **Save and continue** and click on **Back to dashboard**<br><br>
-  * Run the script to set up the authentication<br>
+  * Run the script to set up the authentication<br><br>
     To run the script you just have to open a command prompt for Windows or a terminal for Linux. After this run this command to setup GooglePhotos :
     ```
     npm run google-authenticate
