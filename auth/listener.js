@@ -1,9 +1,5 @@
 const config = require('./../config.json');
 
-if(!config.application.enableListener) {
-    process.exit(0);
-}
-
 const fs = require('fs');
 var express = require('express');
 var https = require('https');
