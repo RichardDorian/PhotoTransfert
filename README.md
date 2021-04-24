@@ -21,7 +21,7 @@ Setup process
 ------------------
 
 First of all, if you prefer a video [here is one](#video-tutorial)
-* Install dependances
+* Install dependances<br><br>
   Open command prompt for Windows or a terminal for Linux and run this command to install all the packages
   ```
   npm install
