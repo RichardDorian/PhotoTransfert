@@ -3,7 +3,8 @@
         "_info": "If the listener is set to 'true', the oneDrive authentication process will be semi-manual, if it set to 'false', the oneDrive authentication process will be fully manual",
         "listenerPort": 37793,
         "deletingFilesOnOneDriveAfterMoving": false,
-        "maxUploadingTime": 120
+        "maxUploadingTime": 120,
+        "tryToRecoverUnuploadedFiles": true
     },
     "oneDriveAuth": {
         "clientId": "",
@@ -14,12 +15,12 @@
     },
     "oneDrive": {
         "_info": "Keep 'accesssToken' blank ! This field will be filled when running 'npm run onedrive-authenticate' The accessToken is valid only 1 hour !",
-        "accessToken": "",
+        "accessToken": "dev",
         "folderId": ""
     },
     "googlePhotos": {
         "_info": "Keep 'authToken' blank ! This field will be filled when running 'npm run google-authenticate' The authToken is valid only 1 hour !",
-        "authToken": "",
+        "authToken": "dev",
         "albumName": "",
         "_info1": "Keep 'albumId' blank ! This field will be fillder when running 'npm run google-authenticate' for the first time",
         "albumId": ""
