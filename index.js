@@ -19,11 +19,41 @@ if(googlePhotos.authToken == "" || googlePhotos.authToken == null) {
     process.exit(0);
 }
 
+/** Recover function */
+
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+ 
+const adapterA = new FileSync(__dirname + "/downloads/recovery.json");
+const adapter = low(adapterA);
+
+adapter.defaults = {"uploadList": []}
+
+function getUploadList() {
+    return adapter.get(`uploadList`);
+}
+
+function addFileToUploadList(fileName) {
+    let list = getUploadList();
+    list.push(fileName);
+    adapter.set(`uploadList`, list);
+}
+
+function removeFileFromUploadList(fileName) {
+    let list = getUploadList();
+    list.remove(fileName);
+    adapter.set(`uploadList`, list);
+}
+
+/** Check for unuploaded files */
+
 if(config.application.tryToRecoverUnuploadedFiles) {
     checkUnuploadedFiles();
 } else {
     init();
 }
+
+/** Init */
 
 async function init() {
     let files = [];
@@ -88,7 +118,7 @@ async function downloadOneDriveFiles(fileId, fileName) {
 
 async function uploadToGooglePhotos(fileName, fileId = NaN) {
 
-    if(getUploadList().contains(fileName)) {
+    if(getUploadList().includes(fileName)) {
         try {
             let uploadToken = await photos.transport.upload(fileName, __dirname + "/downloads/" + fileName, config.application.maxUploadingTime * 1000);
             let upload = await photos.mediaItems.albumBatchCreate(googlePhotos.albumId, fileName, "Automatic upload", uploadToken)
@@ -130,30 +160,4 @@ async function deleteFileOnOneDrive(fileName, fileId = NaN) {
     } else {
         console.warn("File " + fileName + " can't be deleted (OneDrive) because no fileId is provided (probably because this file was not successfully uploaded last time)");
     }
-}
-
-/** Recover function */
-
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
- 
-const adapterA = new FileSync(__dirname + "/downloads/recovery.json");
-const adapter = low(adapterA);
-
-adapter.defaults = {"uploadList": []}
-
-function getUploadList() {
-    return adapter.get(`uploadList`);
-}
-
-function addFileToUploadList(fileName) {
-    let list = getUploadList();
-    list.push(fileName);
-    adapter.set(`uploadList`, list);
-}
-
-function removeFileFromUploadList(fileName) {
-    let list = getUploadList();
-    list.remove(fileName);
-    adapter.set(`uploadList`, list);
 }
