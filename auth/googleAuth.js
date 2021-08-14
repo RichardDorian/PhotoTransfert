@@ -60,7 +60,7 @@ function refreshToken(refreshToken) {
     .then(json => {
         response = json;
         setTimeout(() => {
-            
+            writeAccessToken(response.access_token);
         }, 1000);
     });
 }
